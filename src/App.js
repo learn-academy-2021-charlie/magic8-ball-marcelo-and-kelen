@@ -12,9 +12,21 @@ class App extends Component {
         "It is decidedly so", 
         " Without a doubt"
       ],
-      selectedAnswer: "",
-      input: ""
+      selectedAnswer: [],
+      input: "",
+      questions: []
     }
+  }
+
+  handleSubmit = () => {
+    const { answerArray } = this.state
+    // ACTION ITEM: Your code here!!
+    // ACTION ITEM: Update the answerArray selection
+    this.setState({ 
+      selectedAnswer: 
+        [...this.state.selectedAnswer, answerArray[Math.floor(Math.random()*4)]],
+      questions: [...this.state.questions, this.state.input]
+    })
   }
 
   handleChange = (e) => {
@@ -25,20 +37,17 @@ class App extends Component {
     console.log(e.target.value)
   }
 
-  handleSubmit = () => {
-    const { answerArray } = this.state
-    // ACTION ITEM: Your code here!!
-    // ACTION ITEM: Update the answerArray selection
-    this.setState({ 
-      selectedAnswer: 
-        answerArray[Math.floor(Math.random()*4)] })
-    }
-
-
   // trying to clear input box!!!!                             
   handleClear = () => {                  
     this.setState({
       input: ''
+    }) 
+    console.log(this.state) 
+  }
+
+  handleListClear = () => {                  
+    this.setState({
+      selectedAnswer: [], questions: []
     }) 
     console.log(this.state) 
   }
@@ -57,9 +66,17 @@ class App extends Component {
         <button onClick={ this.handleSubmit }>
           Ask the Magic 8 Ball a Question
         </button>
-        <p>{ this.state.selectedAnswer }</p>
+          { this.state.questions.map((item) => {
+            return <p key={item}>{item}?</p>
+          }) }
+          { this.state.selectedAnswer.map((item) => {
+          return <p key={Math.random()}>{item}</p>
+        })}
         <button onClick={ this.handleClear }>
           clear
+        </button>
+        <button onClick={ this.handleListClear }>
+          clear list
         </button>
       </>
     )
